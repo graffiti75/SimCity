@@ -1,0 +1,26 @@
+{
+  "name": "simcity",
+  "version": "1.0.0",
+  "description": "``` npm init -y npm install three npm install --save-dev gh-pages vite @types/three http-server ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist -m '< add commit message >'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.176.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.176.0",
+    "gh-pages": "^6.3.0",
+    "http-server": "^14.1.1",
+    "vite": "^6.3.5"
+  }
+}

@@ -1,5 +1,6 @@
 // import * as THREE from "https://unpkg.com/three/build/three.module.js";
 import * as THREE from "three";
+import { createCamera } from "./camera";
 
 export function createScene() {
     // Initial scene setup
@@ -7,13 +8,8 @@ export function createScene() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x334433);
 
-    const camera = new THREE.PerspectiveCamera(
-        75,
-        gameWindow.offsetWidth / gameWindow.offsetHeight,
-        0.1,
-        1000
-    );
-    camera.position.z = 5;
+    const camera = createCamera(gameWindow);
+
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(gameWindow.offsetWidth, gameWindow.offsetHeight);
     gameWindow.appendChild(renderer.domElement);
@@ -24,9 +20,7 @@ export function createScene() {
     scene.add(mesh);
 
     function draw() {
-        mesh.rotation.x += 0.01;
-        mesh.rotation.y += 0.01;
-        renderer.render(scene, camera);
+        renderer.render(scene, camera.camera);
     }
 
     function start() {
@@ -37,13 +31,28 @@ export function createScene() {
         renderer.setAnimationLoop(null);
     }
 
+    function onMouseDown(event) {
+        camera.onMouseDown(event);
+    }
+
+    function onMouseUp(event) {
+        camera.onMouseUp(event);
+    }
+
+    function onMouseMove(event) {
+        camera.onMouseMove(event);
+    }
+
     return {
         start,
         stop,
+        onMouseDown,
+        onMouseUp,
+        onMouseMove,
     };
 }
 
-window.onload = () => {
-    window.scene = createScene();
-    window.scene.start();
-};
+// window.onload = () => {
+//     window.scene = createScene();
+//     window.scene.start();
+// };

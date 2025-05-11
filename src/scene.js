@@ -1,26 +1,49 @@
-{
-  "name": "simcity",
-  "version": "1.0.0",
-  "description": "``` npm init -y npm install three npm install --save-dev gh-pages vite @types/three http-server ```",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
-    "start": "vite",
-    "build": "vite build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -m '< add commit message >'"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "three": "^0.176.0"
-  },
-  "devDependencies": {
-    "@types/three": "^0.176.0",
-    "gh-pages": "^6.3.0",
-    "http-server": "^14.1.1",
-    "vite": "^6.3.5"
-  }
+// import * as THREE from "https://unpkg.com/three/build/three.module.js";
+import * as THREE from "three";
+
+export function createScene() {
+    // Initial scene setup
+    const gameWindow = document.getElementById("render-target");
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x334433);
+
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        gameWindow.offsetWidth / gameWindow.offsetHeight,
+        0.1,
+        1000
+    );
+    camera.position.z = 5;
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(gameWindow.offsetWidth, gameWindow.offsetHeight);
+    gameWindow.appendChild(renderer.domElement);
+
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshBasicMaterial({ color: 0xff8844 });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    function draw() {
+        mesh.rotation.x += 0.01;
+        mesh.rotation.y += 0.01;
+        renderer.render(scene, camera);
+    }
+
+    function start() {
+        renderer.setAnimationLoop(draw);
+    }
+
+    function stop() {
+        renderer.setAnimationLoop(null);
+    }
+
+    return {
+        start,
+        stop,
+    };
 }
+
+window.onload = () => {
+    window.scene = createScene();
+    window.scene.start();
+};

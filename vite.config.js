@@ -1,6 +1,6 @@
 export default {
-  base: "/SimCity/",
-  server: {
-    open: true,
-  },
+    base: "/SimCity/",
+    server: {
+        open: true,
+    },
 };

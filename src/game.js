@@ -1,9 +1,11 @@
 import { createScene } from "./scene.js";
 import { createCity } from "./city.js";
 
+let time = 0;
+
 export function createGame() {
     const scene = createScene();
-    const city = createCity(144);
+    const city = createCity(16);
     scene.initialize(city);
     window.scene = scene;
     document.addEventListener("mousedown", window.scene.onMouseDown, false);
@@ -17,14 +19,16 @@ export function createGame() {
 
     const game = {
         update() {
+            time += 1;
+            console.log(`time: ${time}`);
             city.update();
-            scene.update(city);
+            scene.update(city, time);
         },
     };
 
-    setInterval(() => {
-        game.update();
-    }, 5000);
+    setInterval((t) => {
+        game.update(t);
+    }, 1000);
 
     scene.start();
 

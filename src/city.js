@@ -7,32 +7,7 @@ export function createCity(size) {
         for (let x = 0; x < size; x++) {
             const row = [];
             for (let y = 0; y < size; y++) {
-                const tile = {
-                    x,
-                    y,
-                    building: undefined,
-                    update() {
-                        const x = Math.random();
-                        if (x < 0.01) {
-                            if (this.building === undefined) {
-                                this.building = "building-1";
-                            } else if (this.building === "building-1") {
-                                this.building = "building-2";
-                            } else if (this.building === "building-2") {
-                                this.building = "building-3";
-                            } else if (this.building === "building-3") {
-                                this.building = "building-4";
-                            } else if (this.building === "building-4") {
-                                this.building = "building-5";
-                            } else if (this.building === "building-5") {
-                                this.building = "building-6";
-                            }
-                        }
-                    },
-                };
-                // if (Math.random() > 0.7) {
-                //     tile.building = "building";
-                // }
+                const tile = createTile(x, y);
                 row.push(tile);
             }
             data.push(row);
@@ -52,5 +27,24 @@ export function createCity(size) {
         size,
         data,
         update,
+    };
+}
+
+function createTile(x, y) {
+    return {
+        terrainId: "grass",
+        buildingId: undefined,
+        update() {
+            const x = Math.random();
+            if (x < 0.01) {
+                if (this.buildingId === undefined) {
+                    this.buildingId = "building-1";
+                } else if (this.buildingId === "building-1") {
+                    this.buildingId = "building-2";
+                } else if (this.buildingId === "building-2") {
+                    this.buildingId = "building-3";
+                }
+            }
+        },
     };
 }
